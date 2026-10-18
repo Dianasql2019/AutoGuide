@@ -3,3 +3,217 @@
 @media(max-width:1080px){.navigation{gap:16px;margin-left:0}.nav{gap:20px}.hero-grid{grid-template-columns:1.4fr .8fr}.floating-note{display:none}.vehicle{left:18%}.hero-art{opacity:.8}.search-panel{width:min(750px,calc(100vw - 45px))}.header-actions{gap:8px}}
 @media(max-width:830px){.navigation{display:none;position:absolute;top:100%;left:0;width:100%;background:#fff;padding:20px 24px;box-shadow:0 12px 24px #18374e1c;flex-direction:column}.navigation.open{display:flex}.mobile-menu{display:block}.hero-grid{display:block;min-height:auto}.hero-content{padding:60px 0}.hero-art{display:none}.search-panel{width:100%}.catalog-layout{grid-template-columns:1fr}.filters{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px}.filter-header{grid-column:1/-1;margin-bottom:2px}.filter-group{margin:0 0 10px}.filter-disclaimer{grid-column:1/-1;margin:0}.cta-layout{flex-wrap:wrap}.btn-white{margin-left:0}.section{padding:60px 0}}
 @media(max-width:560px){.container{width:calc(100% - 30px)}.nav{height:62px}.logo{font-size:21px}.header-actions .btn-outline{display:none}.city-link{font-size:0}.city-link svg{width:21px;height:21px}.hero-content{padding:43px 0}.hero h1{font-size:35px;letter-spacing:-1.3px}.hero-lead{font-size:13px}.search-panel{padding:17px}.search-controls{grid-template-columns:1fr 1fr}.city-field{grid-column:1/-1}.search-button{grid-column:1/-1}.hero-assurance{gap:10px 15px}.hero-assurance span{font-size:10px}.section-heading{align-items:start;gap:10px}.section-heading h2{font-size:25px}.catalog-city{font-size:10px;white-space:nowrap}.filters{grid-template-columns:1fr 1fr;padding:15px}.cards{grid-template-columns:1fr}.results-toolbar{flex-wrap:wrap;gap:10px}.steps-grid{grid-template-columns:1fr;gap:30px;margin-top:32px}.step p{max-width:340px}.cta-layout{gap:16px}.cta-symbol{width:56px;height:56px}.instructor-cta h2{font-size:23px}.footer-main{flex-wrap:wrap;gap:10px;padding:23px 0}.footer-main p{width:100%;margin:0}.footer-main>span{margin:0}.modal-facts{grid-template-columns:repeat(2,1fr)}}
+
+/* АвтоГид — страница инструктора */
+
+.profile-page {
+  padding-top: 30px;
+  padding-bottom: 85px;
+}
+
+.profile-breadcrumbs {
+  font-size: 12px;
+  color: #7b8995;
+  margin-bottom: 30px;
+}
+
+.profile-breadcrumbs a:hover {
+  color: #176fa2;
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 25px;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.profile-block,
+.profile-booking {
+  border: 1px solid #e3e9ee;
+  border-radius: 14px;
+  padding: 28px;
+  background: white;
+}
+
+.profile-block h2 {
+  font-size: 20px;
+  margin: 0 0 18px;
+}
+
+.profile-block p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #627687;
+}
+
+.profile-intro {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--avatar-bg);
+  color: #41637e;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.profile-intro h1 {
+  font-size: 30px;
+  margin: 10px 0;
+}
+
+.profile-location {
+  margin: 0 0 12px;
+}
+
+.profile-rating {
+  font-size: 15px;
+  font-weight: 800;
+  color: #b98013;
+}
+
+.profile-rating span {
+  color: #8697a3;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.profile-status {
+  font-size: 11px !important;
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.profile-details > div {
+  background: #f5f8fa;
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.profile-details span {
+  color: #8494a1;
+  font-size: 11px;
+}
+
+.profile-details strong {
+  color: #213748;
+  font-size: 14px;
+}
+
+.profile-placeholder {
+  background: #f5f8fa;
+  border: 1px dashed #ccdce6;
+  border-radius: 10px;
+  padding: 28px;
+  color: #8297a5;
+  font-size: 12px;
+  text-align: center;
+}
+
+.profile-booking {
+  position: sticky;
+  top: 100px;
+}
+
+.profile-booking > span {
+  font-size: 12px;
+  color: #7b8995;
+}
+
+.profile-price {
+  font-size: 27px;
+  font-weight: 800;
+  margin: 12px 0;
+  color: #152536;
+}
+
+.profile-booking p {
+  font-size: 12px;
+  color: #718697;
+  margin-bottom: 24px;
+}
+
+.profile-contact {
+  width: 100%;
+}
+
+.profile-booking small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.8;
+  color: #98a6b0;
+  margin-top: 15px;
+}
+
+.profile-not-found {
+  text-align: center;
+  padding: 110px 20px;
+}
+
+.profile-not-found p {
+  color: #7b8995;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 850px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-booking {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .profile-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 28px;
+  }
+
+  .profile-intro h1 {
+    font-size: 25px;
+  }
+
+  .profile-block,
+  .profile-booking {
+    padding: 20px;
+  }
+
+  .profile-details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .profile-navigation {
+    display: none;
+  }
+}

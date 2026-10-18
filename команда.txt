@@ -1,0 +1,1 @@
+git add .; git commit -m "Update AutoGuide"; if ($LASTEXITCODE -eq 0) { git push }

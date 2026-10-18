@@ -1,3 +1,4 @@
+import { renderHeader, initHeader } from './components/header.js';
 import './style.css';
 import {cities,instructors} from './data.js';
 
@@ -30,11 +31,7 @@ let favorites = new Set(JSON.parse(localStorage.getItem('ag-favorites')||'[]'));
 const app=document.querySelector('#app');
 app.innerHTML=`
  <div class="demo"><span class="demo-dot"></span> Демонстрационная версия — анкеты и отзывы ниже вымышленные</div>
- <header class="site-header"><div class="container nav">
-   <a class="logo" href="#top" aria-label="АвтоГид, на главную"><span class="logo-icon">${icon('steering',25)}</span><span>Авто<span class="logo-highlight">Гид</span></span></a>
-   <nav id="navigation" class="navigation"><a class="nav-active" href="#catalog">Найти инструктора</a><a href="#how">Как это работает</a><a href="#benefits">О сервисе</a></nav>
-   <div class="header-actions"><button id="header-city" class="city-link">${icon('pin',17)} <span id="header-city-text"></span></button><button id="login-btn" class="btn btn-outline">Личный кабинет</button><button id="menu-btn" class="mobile-menu" aria-label="Открыть меню" aria-expanded="false">${icon('menu')}</button></div>
- </div></header>
+ <header class="site-header">${renderHeader('home')}</header>
  <main id="top">
   <section class="hero"><div class="container hero-grid"><div class="hero-content">
    <div class="eyebrow"><span class="eyebrow-mark"></span> Ваш путь к уверенному вождению</div>
@@ -56,10 +53,11 @@ app.innerHTML=`
  <dialog id="info-dialog" class="dialog small-dialog"><div class="dialog-inner"><button class="dialog-close" id="info-close" aria-label="Закрыть">${icon('x')}</button><h2 id="info-title"></h2><p id="info-message"></p><button class="btn btn-primary" id="info-confirm">Понятно</button></div></dialog>
 `;
 const $=s=>document.querySelector(s);
+initHeader();
 const citySelect=$('#city-select');
 citySelect.innerHTML=cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 citySelect.value=state.city;
-function setCity(city){state.city=city;localStorage.setItem('ag-city',city);citySelect.value=city;$('#header-city-text').textContent=city;$('#catalog-city-text').textContent=city;state.showAll=false;renderCards();}
+function setCity(city){state.city=city;localStorage.setItem('ag-city',city);citySelect.value=city;$('#header-city').textContent=city;$('#catalog-city-text').textContent=city;state.showAll=false;renderCards();}
 function getFiltered(){let result=instructors.filter(p=>p.city===state.city&&(!state.category||p.category===state.category)&&(!state.gearbox||p.gearbox===state.gearbox)&&(!state.maxPrice||p.price<=Number(state.maxPrice))&&(!state.query||p.name.toLowerCase().includes(state.query.toLowerCase()))&&(!state.onlyVerified||p.verified));if(state.sort==='rating')result.sort((a,b)=>b.rating-a.rating);if(state.sort==='price')result.sort((a,b)=>a.price-b.price);if(state.sort==='experience')result.sort((a,b)=>b.experience-a.experience);return result;}
 function card(p){const saved=favorites.has(p.id);return `<article class="instructor-card"><div class="card-top"><div class="avatar" style="--avatar-bg:${p.color}"><span>${p.initials}</span></div><div class="card-name"><h3>${escapeHTML(p.name)}</h3><p>${icon('pin',14)} ${escapeHTML(p.district)}</p><div class="card-rating">${icon('star',15)} <b>${p.rating.toFixed(1)}</b><span>· ${p.reviews} отзывов</span></div></div><button class="favorite ${saved?'saved':''}" data-favorite="${p.id}" aria-label="${saved?'Убрать из избранного':'Добавить в избранное'}" aria-pressed="${saved}">${icon('heart',20)}</button></div><div class="card-tags"><span>${icon('car',15)} Категория ${p.category}</span><span>${p.gearbox}</span><span>Стаж ${p.experience} лет</span></div>${p.verified?`<div class="verified">${icon('shield',15)} Документы подтверждены*</div>`:'<div class="unverified">Проверка документов не подтверждена*</div>'}<div class="card-footer"><div><small>Стоимость занятия</small><strong>от ${money(p.price)} ₽</strong></div><button class="card-detail" data-profile="${p.id}">Профиль ${icon('arrow',17)}</button></div></article>`;}
 function renderCards(){const data=getFiltered();$('#results-count').textContent=`${data.length} ${data.length===1?'инструктор':data.length>=2&&data.length<=4?'инструктора':'инструкторов'}`;$('#cards').innerHTML=data.length?data.slice(0,state.showAll?data.length:4).map(card).join(''):`<div class="empty-state">${icon('search',32)}<h3>Инструкторы не найдены</h3><p>Попробуйте выбрать другой город или изменить фильтры.</p><button class="btn btn-outline" id="empty-reset">Сбросить фильтры</button></div>`;$('#more-btn').hidden=data.length<=4||state.showAll;$('#empty-reset')?.addEventListener('click',resetFilters);document.querySelectorAll('[data-favorite]').forEach(el=>el.addEventListener('click',()=>{const id=Number(el.dataset.favorite);favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem('ag-favorites',JSON.stringify([...favorites]));renderCards();}));document.querySelectorAll('[data-profile]').forEach(el=>el.addEventListener('click',()=>openProfile(Number(el.dataset.profile))));}
@@ -67,8 +65,17 @@ function resetFilters(){state.category='';state.gearbox='';state.maxPrice='';sta
 function openProfile(id){const p=instructors.find(x=>x.id===id);$('#dialog-content').innerHTML=`<div class="dialog-inner"><button class="dialog-close" id="profile-close" aria-label="Закрыть">${icon('x')}</button><div class="modal-avatar" style="--avatar-bg:${p.color}">${p.initials}</div><span class="section-kicker">Профиль инструктора · Демо</span><h2>${escapeHTML(p.name)}</h2><p class="modal-muted">${icon('pin',16)} ${escapeHTML(p.city)}, ${escapeHTML(p.district)}</p><div class="modal-facts"><div><small>Категория</small><strong>${p.category}</strong></div><div><small>КПП</small><strong>${p.gearbox}</strong></div><div><small>Стаж</small><strong>${p.experience} лет</strong></div><div><small>Цена</small><strong>${money(p.price)} ₽</strong></div></div><p>${escapeHTML(p.bio)}</p><p class="modal-muted">Рейтинг и сведения в этой карточке вымышленные. Функция связи с инструктором появится после подключения реальных профилей и сервера.</p><button class="btn btn-primary" id="profile-action">Как связаться?</button></div>`;$('#profile-close').onclick=()=>$('#profile-dialog').close();$('#profile-action').onclick=()=>showInfo('Функция в разработке','В рабочей версии здесь будет защищённая связь с инструктором. Демонстрационный профиль не содержит настоящих контактов.');$('#profile-dialog').showModal();}
 function showInfo(title,message){$('#info-title').textContent=title;$('#info-message').textContent=message;$('#info-dialog').showModal();}
 $('#info-close').onclick=$('#info-confirm').onclick=()=>$('#info-dialog').close();
-$('#search-form').addEventListener('submit',e=>{e.preventDefault();state.category=$('#category-select').value;state.gearbox=$('#gearbox-select').value;$('#side-gearbox').value=state.gearbox;setCity(citySelect.value);document.querySelector('#catalog').scrollIntoView({behavior:'smooth'});});
-citySelect.addEventListener('change',()=>setCity(citySelect.value));
+$('#search-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const params = new URLSearchParams({
+    city: $('#city-select').value,
+    category: $('#category-select').value,
+    gearbox: $('#gearbox-select').value
+  });
+
+  window.location.href = `./catalog.html?${params.toString()}`;
+});
 $('#header-city').onclick=()=>{citySelect.focus();document.querySelector('#top').scrollIntoView({behavior:'smooth'});};
 $('#price-filter').onchange=e=>{state.maxPrice=e.target.value;state.showAll=false;renderCards();};
 $('#side-gearbox').onchange=e=>{state.gearbox=e.target.value;$('#gearbox-select').value=state.gearbox;state.showAll=false;renderCards();};
@@ -78,8 +85,13 @@ $('#sort-select').onchange=e=>{state.sort=e.target.value;renderCards();};
 $('#reset-filters').onclick=resetFilters;
 $('#more-btn').onclick=()=>{state.showAll=true;renderCards();};
 $('#login-btn').onclick=()=>showInfo('Личный кабинет','Следующим этапом подключим регистрацию по номеру телефона с SMS-подтверждением и разделение ролей: курсант и инструктор.');
+
 $('#become-instructor').onclick=()=>showInfo('Регистрация инструктора','На следующем этапе добавим регистрацию, заполнение анкеты и отправку профиля на модерацию.');
-$('#menu-btn').onclick=()=>{const nav=$('#navigation');const open=nav.classList.toggle('open');$('#menu-btn').setAttribute('aria-expanded',String(open));};
-document.querySelectorAll('.navigation a').forEach(a=>a.addEventListener('click',()=>{$('#navigation').classList.remove('open');$('#menu-btn').setAttribute('aria-expanded','false');}));
-for (const dlg of document.querySelectorAll('dialog')) dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+
+for (const dlg of document.querySelectorAll('dialog')) {
+  dlg.addEventListener('click',e=>{
+    if(e.target===dlg)dlg.close();
+  });
+}
+
 setCity(state.city);
