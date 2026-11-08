@@ -84,7 +84,6 @@ $('#verified-filter').onchange=e=>{state.onlyVerified=e.target.checked;renderCar
 $('#sort-select').onchange=e=>{state.sort=e.target.value;renderCards();};
 $('#reset-filters').onclick=resetFilters;
 $('#more-btn').onclick=()=>{state.showAll=true;renderCards();};
-$('#login-btn').onclick=()=>showInfo('Личный кабинет','Следующим этапом подключим регистрацию по номеру телефона с SMS-подтверждением и разделение ролей: курсант и инструктор.');
 
 $('#become-instructor').onclick=()=>showInfo('Регистрация инструктора','На следующем этапе добавим регистрацию, заполнение анкеты и отправку профиля на модерацию.');
 

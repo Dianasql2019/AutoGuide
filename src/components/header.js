@@ -35,16 +35,26 @@ export function renderHeader(activePage = 'home') {
           <a href="./index.html#how">Как это работает</a>
           <a href="./index.html#benefits">О сервисе</a>
         </nav>
+
 ${isHome ? `
   <div class="header-actions">
     <button id="header-city" class="city-link" type="button">
       Выбрать город
     </button>
-    <button id="login-btn" class="btn btn-outline" type="button">
-      Личный кабинет
-    </button>
   </div>
 ` : ''}
+
+<div class="auth-actions">
+  <a href="./login.html" class="btn btn-outline">
+    Войти
+  </a>
+  <a href="./register.html" class="register-btn">
+    Зарегистрироваться
+  </a>
+</div>
+
+
+
         <button class="mobile-menu" id="menu-btn"
                 aria-label="Открыть меню"
                 aria-expanded="false"

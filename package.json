@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:all": "node scripts/dev-all.cjs"
   },
-  "devDependencies": {"vite": "^7.1.0"}
+  "devDependencies": {
+    "concurrently": "^10.0.7",
+    "vite": "^7.1.0"
+  }
 }

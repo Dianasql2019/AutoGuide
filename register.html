@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Регистрация ученика — АвтоГид</title>
+
+  <style>
+    :root {
+      font-family: Inter, Arial, sans-serif;
+      color: #172b4d;
+      background: #f3f7fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: white;
+      border-bottom: 1px solid #e5ebf3;
+      padding: 20px max(24px, calc((100% - 1160px) / 2));
+    }
+
+    .logo {
+      color: #1769db;
+      font-size: 25px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 48px 18px 70px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 38px 42px;
+      background: white;
+      border: 1px solid #eaf0f8;
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(29, 69, 120, .08);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      color: #1769db;
+      background: #edf5ff;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 30px;
+      letter-spacing: -.6px;
+      margin: 0 0 12px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 0 0 12px;
+    }
+
+    .description {
+      color: #64748b;
+      font-size: 15px;
+      line-height: 1.65;
+      margin: 0 0 28px;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field { margin-bottom: 20px; }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .optional {
+      font-weight: 400;
+      color: #7a8799;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 0 14px;
+      border: 1px solid #cbd7e6;
+      border-radius: 11px;
+      font: inherit;
+      font-size: 16px;
+      color: #172b4d;
+      background: white;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1769db;
+      box-shadow: 0 0 0 4px #1769db17;
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 10px 0 24px;
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 400;
+      color: #52637b;
+    }
+
+    .consent input {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      margin-top: 2px;
+      accent-color: #1769db;
+    }
+
+    button.primary {
+      width: 100%;
+      min-height: 52px;
+      border: none;
+      border-radius: 11px;
+      background: #1769db;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary:hover { background: #115bc0; }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .secondary {
+      display: block;
+      margin: 16px auto 0;
+      border: 0;
+      background: transparent;
+      color: #1769db;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .notice {
+      margin: 20px 0 0;
+      padding: 15px;
+      border-radius: 11px;
+      background: #eef5ff;
+      color: #4d6482;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .message {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .error { color: #c62d38; }
+    .success { color: #15803d; }
+
+    .footer {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid #e9eef5;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    a {
+      color: #1769db;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 560px) {
+      main { padding: 24px 14px; }
+      .card { padding: 26px 22px; }
+      .fields { grid-template-columns: 1fr; gap: 0; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href="./index.html">АвтоГид</a>
+  </header>
+
+  <main>
+    <section class="card">
+      <span class="eyebrow">ЛИЧНЫЙ КАБИНЕТ УЧЕНИКА</span>
+
+      <div id="registration-heading">
+        <h1>Создайте аккаунт</h1>
+        <p class="description">
+          Зарегистрируйтесь, чтобы находить автоинструкторов,
+          сохранять понравившиеся анкеты и управлять
+          своими занятиями в будущем.
+        </p>
+      </div>
+
+      <form id="registration-form">
+        <div class="fields">
+          <div class="field">
+            <label for="lastName">Фамилия *</label>
+            <input
+              id="lastName"
+              name="lastName"
+              autocomplete="family-name"
+              maxlength="100"
+              minlength="2"
+              required
+              placeholder="Иванова"
+            />
+          </div>
+
+          <div class="field">
+            <label for="firstName">Имя *</label>
+            <input
+              id="firstName"
+              name="firstName"
+              autocomplete="given-name"
+              maxlength="100"
+              minlength="2"
+              required
+              placeholder="Анна"
+            />
+          </div>
+
+          <div class="field full">
+            <label for="middleName">
+              Отчество
+              <span class="optional">(необязательно)</span>
+            </label>
+            <input
+              id="middleName"
+              name="middleName"
+              maxlength="100"
+              placeholder="Сергеевна"
+            />
+          </div>
+
+          <div class="field full">
+            <label for="birthDate">
+              Дата рождения
+              <span class="optional">(необязательно)</span>
+            </label>
+            <input
+              id="birthDate"
+              name="birthDate"
+              type="date"
+            />
+          </div>
+
+          <div class="field full">
+            <label for="email">Электронная почта *</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="example@mail.ru"
+              maxlength="254"
+              required
+            />
+          </div>
+        </div>
+
+        <label class="consent">
+          <input id="consent" type="checkbox" required />
+          <span>
+            Я ознакомлен(а) с информацией об обработке
+            персональных данных и согласен(на) на их
+            обработку для создания аккаунта.
+          </span>
+        </label>
+
+        <button class="primary" type="submit">
+          Продолжить и получить код
+        </button>
+      </form>
+
+      <form id="code-form" hidden>
+        <h2>Подтвердите email</h2>
+
+        <p class="description" id="email-info"></p>
+
+        <div class="field">
+          <label for="code">Шестизначный код *</label>
+          <input
+            id="code"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            maxlength="6"
+            pattern="[0-9]{6}"
+            placeholder="000000"
+            required
+          />
+        </div>
+
+        <button class="primary" type="submit">
+          Подтвердить и зарегистрироваться
+        </button>
+
+        <button
+          type="button"
+          class="secondary"
+          id="back-button"
+        >
+          Вернуться к анкете
+        </button>
+      </form>
+
+      <div id="success-screen" hidden>
+        <h2>Аккаунт создан!</h2>
+
+        <p class="description">
+          Электронная почта успешно подтверждена.
+          Ваши данные сохранены в АвтоГиде.
+        </p>
+
+        <a href="./index.html">
+          Перейти на главную
+        </a>
+      </div>
+
+      <div
+        id="result"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <div class="notice" id="email-notice">
+        🔒 Мы отправим одноразовый код подтверждения на
+        указанный email. Код действует 5 минут.
+      </div>
+
+      <div class="footer">
+        Уже есть аккаунт?
+        <a href="./login.html">Войти</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./src/register.js"></script>
+</body>
+</html>
