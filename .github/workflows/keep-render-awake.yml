@@ -1,0 +1,14 @@
+
+name: Keep AutoGuide API Awake
+
+on:
+  schedule:
+    - cron: '7,17,27,37,47,57 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping AutoGuide API
+        run: curl --fail --silent --show-error --max-time 110 https://autoguide-api.onrender.com/api/health
