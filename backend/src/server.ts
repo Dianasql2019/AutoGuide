@@ -8,6 +8,10 @@ import { config } from './config';
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
 
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use(express.json());
 app.use('/api/auth', authRouter);
 
