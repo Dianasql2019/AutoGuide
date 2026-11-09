@@ -1,4 +1,4 @@
-
+import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import { pool } from './db';
@@ -11,7 +11,10 @@ const PORT = Number(process.env.PORT || 3001);
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
-
+app.use(cors({
+  origin: 'https://dianasql2019.github.io',
+  credentials: true
+}));
 app.use(express.json());
 app.use('/api/auth', authRouter);
 

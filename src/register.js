@@ -1,4 +1,7 @@
-
+const API_BASE =
+  window.location.hostname === 'dianasql2019.github.io'
+    ? 'https://autoguide-api.onrender.com'
+    : '';
 const registrationForm = document.querySelector('#registration-form');
 const codeForm = document.querySelector('#code-form');
 const heading = document.querySelector('#registration-heading');
@@ -17,8 +20,9 @@ function showMessage(message, isError = false) {
 }
 
 async function apiRequest(path, data) {
-  const response = await fetch(path, {
+const response = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
