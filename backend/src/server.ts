@@ -40,7 +40,7 @@ app.get('/api/health/database', async (_req, res) => {
   }
 });
 
-app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`АвтоГид API: http://localhost:${PORT}`);
   console.log(`SMS-провайдер: ${config.smsProvider}`);
 });
